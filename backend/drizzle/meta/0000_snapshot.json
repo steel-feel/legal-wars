@@ -1,0 +1,601 @@
+{
+  "id": "10f3ebf5-5f79-4eec-aa7f-bc070096a3b7",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.cases": {
+      "name": "cases",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prosecution_brief": {
+          "name": "prosecution_brief",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "defense_brief": {
+          "name": "defense_brief",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "evidences": {
+          "name": "evidences",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "witnesses": {
+          "name": "witnesses",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.game_stages": {
+      "name": "game_stages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stage": {
+          "name": "stage",
+          "type": "stage_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "side": {
+          "name": "side",
+          "type": "side",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "argument_text": {
+          "name": "argument_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "selected_evidences": {
+          "name": "selected_evidences",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "selected_witnesses": {
+          "name": "selected_witnesses",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "game_stages_game_id_games_id_fk": {
+          "name": "game_stages_game_id_games_id_fk",
+          "tableFrom": "game_stages",
+          "tableTo": "games",
+          "columnsFrom": [
+            "game_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "game_stages_player_id_players_id_fk": {
+          "name": "game_stages_player_id_players_id_fk",
+          "tableFrom": "game_stages",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.games": {
+      "name": "games",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "game_id_onchain": {
+          "name": "game_id_onchain",
+          "type": "varchar(66)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "creator_id": {
+          "name": "creator_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "opponent_id": {
+          "name": "opponent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "case_id": {
+          "name": "case_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stake_amount": {
+          "name": "stake_amount",
+          "type": "varchar(78)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "creator_staked": {
+          "name": "creator_staked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "opponent_staked": {
+          "name": "opponent_staked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "prosecution_player_id": {
+          "name": "prosecution_player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "defense_player_id": {
+          "name": "defense_player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "side_picker_id": {
+          "name": "side_picker_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "current_stage": {
+          "name": "current_stage",
+          "type": "game_stage",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending_stake'"
+        },
+        "winner_id": {
+          "name": "winner_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "judgment_text": {
+          "name": "judgment_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "game_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'active'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "games_creator_id_players_id_fk": {
+          "name": "games_creator_id_players_id_fk",
+          "tableFrom": "games",
+          "tableTo": "players",
+          "columnsFrom": [
+            "creator_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "games_opponent_id_players_id_fk": {
+          "name": "games_opponent_id_players_id_fk",
+          "tableFrom": "games",
+          "tableTo": "players",
+          "columnsFrom": [
+            "opponent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "games_case_id_cases_id_fk": {
+          "name": "games_case_id_cases_id_fk",
+          "tableFrom": "games",
+          "tableTo": "cases",
+          "columnsFrom": [
+            "case_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "games_prosecution_player_id_players_id_fk": {
+          "name": "games_prosecution_player_id_players_id_fk",
+          "tableFrom": "games",
+          "tableTo": "players",
+          "columnsFrom": [
+            "prosecution_player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "games_defense_player_id_players_id_fk": {
+          "name": "games_defense_player_id_players_id_fk",
+          "tableFrom": "games",
+          "tableTo": "players",
+          "columnsFrom": [
+            "defense_player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "games_side_picker_id_players_id_fk": {
+          "name": "games_side_picker_id_players_id_fk",
+          "tableFrom": "games",
+          "tableTo": "players",
+          "columnsFrom": [
+            "side_picker_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "games_winner_id_players_id_fk": {
+          "name": "games_winner_id_players_id_fk",
+          "tableFrom": "games",
+          "tableTo": "players",
+          "columnsFrom": [
+            "winner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "games_game_id_onchain_unique": {
+          "name": "games_game_id_onchain_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "game_id_onchain"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.notifications": {
+      "name": "notifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "notification_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "read": {
+          "name": "read",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "notifications_player_id_players_id_fk": {
+          "name": "notifications_player_id_players_id_fk",
+          "tableFrom": "notifications",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "notifications_game_id_games_id_fk": {
+          "name": "notifications_game_id_games_id_fk",
+          "tableFrom": "notifications",
+          "tableTo": "games",
+          "columnsFrom": [
+            "game_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.players": {
+      "name": "players",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "wallet_address": {
+          "name": "wallet_address",
+          "type": "varchar(42)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privy_did": {
+          "name": "privy_did",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "players_wallet_address_unique": {
+          "name": "players_wallet_address_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "wallet_address"
+          ]
+        },
+        "players_privy_did_unique": {
+          "name": "players_privy_did_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "privy_did"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.game_stage": {
+      "name": "game_stage",
+      "schema": "public",
+      "values": [
+        "pending_stake",
+        "side_selection",
+        "initial_arguments",
+        "evidences_witnesses",
+        "final_arguments",
+        "judgment",
+        "completed"
+      ]
+    },
+    "public.game_status": {
+      "name": "game_status",
+      "schema": "public",
+      "values": [
+        "active",
+        "archived"
+      ]
+    },
+    "public.notification_type": {
+      "name": "notification_type",
+      "schema": "public",
+      "values": [
+        "game_invitation",
+        "opponent_staked",
+        "both_staked",
+        "side_selected",
+        "your_turn",
+        "opponent_submitted",
+        "judgment_delivered"
+      ]
+    },
+    "public.side": {
+      "name": "side",
+      "schema": "public",
+      "values": [
+        "prosecution",
+        "defense"
+      ]
+    },
+    "public.stage_type": {
+      "name": "stage_type",
+      "schema": "public",
+      "values": [
+        "initial_arguments",
+        "evidences_witnesses",
+        "final_arguments"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
