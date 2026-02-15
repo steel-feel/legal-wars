@@ -9,10 +9,12 @@ import { GameCard } from "@/components/GameCard";
 import { NewGameModal } from "@/components/NewGameModal";
 import { UserPill } from "@/components/UserPill";
 import { useGames } from "@/hooks/useGames";
+import { usePlayer } from "@/hooks/usePlayer";
 import { useStake } from "@/hooks/useStake";
 
 export default function Home() {
   const { ready, authenticated, login } = usePrivy();
+  const { player } = usePlayer();
   const { activeGames, pastGames, loading, createGame } = useGames();
   const { createAndStake } = useStake();
   const [showNewGame, setShowNewGame] = useState(false);
