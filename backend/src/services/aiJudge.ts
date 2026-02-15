@@ -130,7 +130,7 @@ Do NOT include any text outside the JSON object.`;
             "X-Title": "Legal Wars",
         },
         body: JSON.stringify({
-            model: "stepfun/step-3.5-flash:free",
+            model: "arcee-ai/trinity-mini:free",
             messages: [
                 { role: "system", content: systemPrompt },
                 {
