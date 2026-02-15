@@ -3,6 +3,7 @@ import { cors } from "@elysiajs/cors";
 import { gameRoutes } from "./routes/games";
 import { caseRoutes } from "./routes/cases";
 import { notificationRoutes } from "./routes/notifications";
+import { playerRoutes } from "./routes/players";
 import { watchStakingEvents } from "./services/contractService";
 
 const app = new Elysia()
@@ -43,6 +44,7 @@ const app = new Elysia()
   .use(gameRoutes)
   .use(caseRoutes)
   .use(notificationRoutes)
+  .use(playerRoutes)
 
   .listen(process.env.PORT || 3000);
 
