@@ -13,7 +13,7 @@ export const tempoChain = defineChain({
     },
     rpcUrls: {
         default: {
-            http: [process.env.RPC_URL || "https://rpc.tempo.xyz"],
+            http: [process.env.RPC_URL || "https://rpc.moderato.tempo.xyz"],
         },
     },
 });

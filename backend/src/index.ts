@@ -7,7 +7,15 @@ import { playerRoutes } from "./routes/players";
 import { watchStakingEvents } from "./services/contractService";
 
 const app = new Elysia()
-  .use(cors())
+  .use(cors(
+    {
+      preflight: true,
+      // preflight: true,
+      origin: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }
+  ))
 
   // Error handling
   .onError(({ error, set }) => {

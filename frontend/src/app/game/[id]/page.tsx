@@ -98,15 +98,17 @@ export default function GamePage() {
     const isSidePicker = game.sidePickerId === playerId;
 
     const handleStake = async () => {
-        if (isCreator) {
-            await createAndStake(
-                game.gameIdOnchain,
-                game.opponent?.walletAddress || "",
-                game.stakeAmount
-            );
-        } else {
-            await stakeOnGame(game.gameIdOnchain, game.stakeAmount);
-        }
+        await stakeOnGame(game.gameIdOnchain, game.stakeAmount);
+        // if (isCreator) {
+
+        //     await createAndStake(
+        //         game.gameIdOnchain,
+        //         game.opponent?.walletAddress || "",
+        //         game.stakeAmount
+        //     );
+        // } else {
+        //     await stakeOnGame(game.gameIdOnchain, game.stakeAmount);
+        // }
     };
 
     // Determine which stage view to show

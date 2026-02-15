@@ -14,9 +14,9 @@ if (!privyAppId || !privyAppSecret) {
 const privyClient = new PrivyClient(privyAppId, privyAppSecret);
 
 export const authMiddleware = new Elysia({ name: "auth" }).derive(
+    { as: 'global' },
     async ({ headers, set }) => {
         const authHeader = headers["authorization"];
-
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             set.status = 401;
             throw new Error("Missing or invalid Authorization header");

@@ -130,7 +130,7 @@ Do NOT include any text outside the JSON object.`;
             "X-Title": "Legal Wars",
         },
         body: JSON.stringify({
-            model: "openai/gpt-4o",
+            model: "stepfun/step-3.5-flash:free",
             messages: [
                 { role: "system", content: systemPrompt },
                 {
